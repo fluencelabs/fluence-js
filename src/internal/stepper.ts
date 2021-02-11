@@ -213,7 +213,7 @@ export async function instantiateInterpreter(
     let instance = await interpreterInstance(cfg);
 
     return (init_user_id: string, script: string, prev_data: Uint8Array, data: Uint8Array) => {
-        let logLevel = console.getLevel();
+        let logLevel = log.getLevel();
         let logLevelStr = 'info';
         if (logLevel === 0) {
             logLevelStr = 'trace';
