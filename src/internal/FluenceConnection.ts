@@ -81,7 +81,7 @@ export class FluenceConnection {
         if (this.status === Status.Initializing) {
             await this.node.start();
 
-            log.trace(`dialing to the node with client's address: ` + this.node.peerId.toB58String());
+            console.trace(`dialing to the node with client's address: ` + this.node.peerId.toB58String());
 
             await this.node.dial(this.address);
 
@@ -92,10 +92,10 @@ export class FluenceConnection {
                     for await (const msg of source) {
                         try {
                             let particle = parseParticle(msg);
-                            log.trace('Particle is received:', JSON.stringify(particle, undefined, 2));
+                            console.trace('Particle is received:', JSON.stringify(particle, undefined, 2));
                             _this.handleParticle(particle);
                         } catch (e) {
-                            log.error('error on handling a new incoming message: ' + e);
+                            console.error('error on handling a new incoming message: ' + e);
                         }
                     }
                 });
@@ -123,7 +123,7 @@ export class FluenceConnection {
 
         let action = toPayload(particle);
         let particleStr = JSON.stringify(action);
-        log.debug('send particle: \n' + JSON.stringify(action, undefined, 2));
+        console.debug('send particle: \n' + JSON.stringify(action, undefined, 2));
 
         // create outgoing substream
         const conn = (await this.node.dialProtocol(this.address, PROTOCOL_NAME)) as {

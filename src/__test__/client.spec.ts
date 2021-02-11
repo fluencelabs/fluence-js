@@ -31,7 +31,7 @@ describe('Typescript usage suite', () => {
         // prettier-ignore
         let seed = [46, 188, 245, 171, 145, 73, 40, 24, 52, 233, 215, 163, 54, 26, 31, 221, 159, 179, 126, 106, 27, 199, 189, 194, 80, 133, 235, 42, 42, 247, 80, 201];
         let seedStr = encode(seed);
-        log.trace('SEED STR: ' + seedStr);
+        console.trace('SEED STR: ' + seedStr);
         let pid = await seedToPeerId(seedStr);
         expect(peerIdToSeed(pid)).to.be.equal(seedStr);
     });
@@ -159,7 +159,7 @@ describe('Typescript usage suite', () => {
         const client = await createConnectedClient(dev[0].multiaddr);
 
         client.registerCallback('test', 'test', (args, _) => {
-            log.trace('should make a call through the network, called "test" "test" with args', args);
+            console.trace('should make a call through the network, called "test" "test" with args', args);
             return {};
         });
 

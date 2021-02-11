@@ -58,7 +58,7 @@ export class TrustGraph {
         let certificatesRaw = resp.certificates;
 
         if (!(certificatesRaw && Array.isArray(certificatesRaw))) {
-            log.error(Array.isArray(certificatesRaw));
+            console.error(Array.isArray(certificatesRaw));
             throw Error('Unexpected. Certificates should be presented in the response as an array.');
         }
 

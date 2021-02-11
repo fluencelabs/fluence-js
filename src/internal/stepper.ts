@@ -87,7 +87,7 @@ function call_export(f: ExportValue, ...argArray: any[]): any {
     if (typeof f === 'function') {
         return f();
     } else {
-        log.warn(`can't call export ${f}: it is not a function, but ${typeof f}`);
+        console.warn(`can't call export ${f}: it is not a function, but ${typeof f}`);
     }
 }
 
@@ -100,20 +100,20 @@ function log_import(cfg: HostImportsConfig): LogImport {
 
                 switch (level) {
                     case 1:
-                        log.error(str);
+                        console.error(str);
                         break;
                     case 2:
-                        log.warn(str);
+                        console.warn(str);
                         break;
                     case 3:
-                        log.info(str);
+                        console.info(str);
                         break;
                     case 4:
-                        log.debug(str);
+                        console.debug(str);
                         break;
                     case 5:
                         // we don't want a trace in trace logs
-                        log.debug(str);
+                        console.debug(str);
                         break;
                 }
             } finally {
@@ -213,7 +213,7 @@ export async function instantiateInterpreter(
     let instance = await interpreterInstance(cfg);
 
     return (init_user_id: string, script: string, prev_data: Uint8Array, data: Uint8Array) => {
-        let logLevel = log.getLevel();
+        let logLevel = console.getLevel();
         let logLevelStr = 'info';
         if (logLevel === 0) {
             logLevelStr = 'trace';

@@ -162,7 +162,7 @@ export class FluenceClientImpl extends FluenceClientBase implements FluenceClien
                         };
                     }
                 } catch (e) {
-                    log.error('error running validation function: ' + e);
+                    console.error('error running validation function: ' + e);
                     return {
                         ret_code: 1, // TODO:: error codes
                         result: 'validation failed',
@@ -210,28 +210,28 @@ export class FluenceClientImpl extends FluenceClientBase implements FluenceClien
             try {
                 await this.connection.sendParticle(particle);
             } catch (reason) {
-                log.error(`Error on sending particle with id ${particle.id}: ${reason}`);
+                console.error(`Error on sending particle with id ${particle.id}: ${reason}`);
             }
         },
 
         onParticleTimeout: (particle: ParticleDto, now: number) => {
-            log.info(`Particle expired. Now: ${now}, ttl: ${particle.ttl}, ts: ${particle.timestamp}`);
+            console.info(`Particle expired. Now: ${now}, ttl: ${particle.ttl}, ts: ${particle.timestamp}`);
             const executingParticle = this.fetchParticles.get(particle.id);
             if (executingParticle) {
                 executingParticle.reject(new Error(`particle ${particle.id} timed out`));
             }
         },
         onLocalParticleRecieved: (particle: ParticleDto) => {
-            log.debug('local particle received', particle);
+            console.debug('local particle received', particle);
         },
         onExternalParticleRecieved: (particle: ParticleDto) => {
-            log.debug('external particle received', particle);
+            console.debug('external particle received', particle);
         },
         onStepperExecuting: (particle: ParticleDto) => {
-            log.debug('stepper executing particle', particle);
+            console.debug('stepper executing particle', particle);
         },
         onStepperExecuted: (stepperOutcome: StepperOutcome) => {
-            log.debug('inner interpreter outcome:', stepperOutcome);
+            console.debug('inner interpreter outcome:', stepperOutcome);
         },
     };
 
