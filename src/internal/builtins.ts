@@ -65,7 +65,7 @@ const requestResponse = async <T>(
  * @param { FluenceClient } client - The Fluence Client instance.
  * @returns { Array<string> } - list of available modules on the connected relay
  */
-export const getModules = async (client: FluenceClient): Promise<string[]> => {
+export const getModules = async (client: FluenceClient, ttl?: number): Promise<string[]> => {
     let callbackFn = "getModules"
     const particle = new Particle(
         `
@@ -78,6 +78,7 @@ export const getModules = async (client: FluenceClient): Promise<string[]> => {
             __relay: client.relayPeerId,
             myPeerId: client.selfPeerId,
         },
+        ttl
     );
 
     return sendParticleAsFetch(client, particle, callbackFn);
@@ -88,7 +89,7 @@ export const getModules = async (client: FluenceClient): Promise<string[]> => {
  * @param { FluenceClient } client - The Fluence Client instance.
  * @returns { Array<string> } - list of available modules on the connected relay
  */
-export const getInterfaces = async (client: FluenceClient): Promise<string[]> => {
+export const getInterfaces = async (client: FluenceClient, ttl?: number): Promise<string[]> => {
     let callbackFn = "getInterfaces"
     const particle = new Particle(
         `
@@ -101,6 +102,7 @@ export const getInterfaces = async (client: FluenceClient): Promise<string[]> =>
             __relay: client.relayPeerId,
             myPeerId: client.selfPeerId,
         },
+        ttl
     );
 
     return sendParticleAsFetch(client, particle, callbackFn);
@@ -118,6 +120,7 @@ export const uploadModule = async (
     name: string,
     moduleBase64: string,
     config?: ModuleConfig,
+    ttl?: number,
 ): Promise<void> => {
     if (!config) {
         config = {
@@ -146,7 +149,7 @@ export const uploadModule = async (
     )
     `;
 
-    return sendParticleAsFetch(client, new Particle(script, data), 'getModules', "_callback");
+    return sendParticleAsFetch(client, new Particle(script, data, ttl), 'getModules', "_callback");
 };
 
 /**
